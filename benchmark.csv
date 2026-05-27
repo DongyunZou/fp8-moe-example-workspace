@@ -1,0 +1,2 @@
+timestamp,commit,solution_name,workload_set,batch_size,latency_us,baseline_latency_us,speedup_vs_baseline,passed_correctness,notes
+

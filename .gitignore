@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+data/
+outputs/
+runs/*
+!runs/.gitkeep
+profile/*
+!profile/.gitkeep
+*.ncu-rep
+*.nsys-rep
+*.sqlite
+

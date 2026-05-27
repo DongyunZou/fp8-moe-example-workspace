@@ -1,0 +1,4 @@
+{"uuid":"e05c6c03","T":1,"split":"dev","baseline_latency_us":59.8,"agent_latency_us":62.0,"passed":true,"notes":"sample small-T row"}
+{"uuid":"6230e838","T":32,"split":"dev","baseline_latency_us":191.5,"agent_latency_us":210.0,"passed":true,"notes":"sample mid-T row"}
+{"uuid":"5e8dc11c","T":14107,"split":"all","baseline_latency_us":2296.9,"agent_latency_us":2100.0,"passed":true,"notes":"sample large-T row"}
+
