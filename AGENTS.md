@@ -73,6 +73,11 @@ Use `KernelWiki` when researching Blackwell/Hopper kernel design:
 - FlashInfer, TensorRT-LLM, DeepGEMM, Sonic MoE, vLLM, SGLang references;
 - MoE scheduling, load imbalance, CTA wave count, and fused epilogues.
 
+KernelWiki is an index, not the whole research pass. For this FP8 MoE target,
+also read `docs/RESEARCH_HINTS.md` and inspect the named upstream sources:
+DeepGEMM Mega MoE, CUTLASS Blackwell block-scale examples, SGLang FP8 MoE, and
+the vendored FlashInfer baseline metadata.
+
 Use `ncu-report-skill` when diagnosing performance:
 
 - create one new `profile/<run_name>/` directory per profiling run;
@@ -98,8 +103,8 @@ Profile -> diagnose -> plan -> edit -> verify -> record
 
    For real data, use the command documented in `README.md`.
 
-3. If the next step is unclear, use KernelWiki and write a short research note
-   under `docs/`.
+3. If the next step is unclear, use KernelWiki plus `docs/RESEARCH_HINTS.md`
+   and write a short research note under `docs/`.
 4. If performance is being diagnosed, use ncu-report-skill and write a profile
    report.
 5. Implement one focused candidate.

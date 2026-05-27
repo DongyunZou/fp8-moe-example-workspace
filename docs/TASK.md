@@ -55,6 +55,9 @@ Bootstrap the repository so another agent can:
 4. profile with ncu-report-skill;
 5. implement and promote candidates through a documented loop.
 
+Research must also use the explicit upstream hints in `docs/RESEARCH_HINTS.md`;
+KernelWiki alone is not considered sufficient for this target.
+
 ## Constraints
 
 - CUDA C++ / CuTe / CUTLASS solution path.
@@ -75,6 +78,8 @@ Bootstrap the repository so another agent can:
       against the PyTorch reference.
 - [ ] Promoted results are recorded in `benchmark.csv`.
 - [ ] Candidate lineage is recorded in `solutions.jsonl`.
+- [ ] `docs/draft.md` covers DeepGEMM Mega MoE, CUTLASS Blackwell block-scale
+      examples, SGLang FP8 MoE, and the FlashInfer baseline contract.
 - [ ] Profiling reports go under `profile/<run_name>/REPORT.md`.
 - [ ] `docs/HANDOFF.md` is enough for a new agent to resume.
 
