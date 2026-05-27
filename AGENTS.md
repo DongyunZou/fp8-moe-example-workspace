@@ -22,8 +22,44 @@ The experiment is successful only when the agent can show:
   and improves the target workload.
 - Do not regress large workloads while fixing small workloads unless the path is
   shape-gated and documented.
+- The solution must be self-contained inside this repository.
+- Any third-party source code used by the solution path must be vendored into
+  this repository. Do not depend on local checkouts, generated caches, system
+  include paths, or uncommitted files outside the repo.
+- Do not add a dependency on a Python package, shared library, header-only
+  library, cubin, or generated source unless the exact source or binary artifact
+  needed for reproduction is included under this repository and documented.
 - Preserve unrelated worktree changes.
 - Record performance-relevant promoted candidates.
+
+## Self-Contained Code Rule
+
+The repository must be enough to build and run the submitted kernel on a fresh
+machine with the documented CUDA/Python/toolchain versions and the workload
+data. A future agent or user should not need files from `/tmp`, `~/.cache`,
+another private checkout, or a previous experiment workspace.
+
+Allowed:
+
+- CUDA, CUDA toolkit headers, driver/runtime libraries, and Nsight tools from
+  the documented system installation.
+- Standard Python library code used by local scripts.
+- Third-party source copied into this repository under a clear directory such as
+  `third_party/`, with license/provenance notes.
+- Generated code or binary artifacts committed under this repository when they
+  are required to reproduce the solution.
+
+Not allowed:
+
+- `#include` paths that point outside this repository except CUDA/toolchain
+  headers.
+- Runtime loading from `~/.cache`, `/tmp`, another project checkout, or an
+  agent-local build directory.
+- Depending on `pip install <package>` for solution logic unless the repository
+  vendors the source or the package is used only for non-solution developer
+  tooling and is documented as such.
+- Copying code from prohibited submissions or sources whose license does not
+  allow redistribution.
 
 ## Required Skills
 
@@ -99,4 +135,3 @@ Every promoted candidate needs:
 
 Use `benchmark.csv` for timing rows and `solutions.jsonl` for candidate DAG
 metadata.
-
