@@ -52,15 +52,9 @@ Set `DATA_DIR` to the local dataset directory, then download the FlashInfer
 contest dataset from Hugging Face:
 
 ```bash
-export DATA_DIR="${DATA_DIR:-$PWD/data/flashinfer-trace}"
+export DATA_DIR="${DATA_DIR:-$PWD/data}"
 mkdir -p "$DATA_DIR"
 hf download flashinfer-ai/mlsys26-contest --repo-type=dataset --local-dir "$DATA_DIR"
-```
-
-Build the repository-local metadata and symlink view:
-
-```bash
-python3 scripts/setup_flashinfer_trace.py --trace-root "$DATA_DIR"
 ```
 
 Expected layout:
