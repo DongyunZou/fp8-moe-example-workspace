@@ -28,6 +28,9 @@ from typing import Any
 
 
 REQUIRED_WORKLOAD_FIELDS = ("uuid", "T")
+DEFAULT_ATOL = 1.0
+DEFAULT_RTOL = 0.3
+DEFAULT_REQUIRED_MATCHED_RATIO = 0.9
 
 
 def load_workloads(path: Path) -> list[dict[str, Any]]:
@@ -172,6 +175,13 @@ def run_verification(args: argparse.Namespace) -> dict[str, Any]:
     return {
         "timestamp": _dt.datetime.now(_dt.timezone.utc).isoformat(),
         "workload_file": str(args.workloads),
+        "correctness": {
+            "atol": args.atol,
+            "rtol": args.rtol,
+            "required_matched_ratio": args.required_matched_ratio,
+            "reference": "PyTorch definition reference",
+        },
+        "speed_baseline": "flashinfer_wrapper_9sdjf3" if args.baseline else None,
         "workload_count": len(results),
         "passed_count": sum(1 for row in results if row["passed"]),
         "all_passed": all(row["passed"] for row in results),
@@ -185,7 +195,14 @@ def run_verification(args: argparse.Namespace) -> dict[str, Any]:
 def print_summary(summary: dict[str, Any]) -> None:
     total = summary["workload_count"]
     passed = summary["passed_count"]
+    correctness = summary["correctness"]
     print(f"{passed}/{total} passed")
+    print(
+        "correctness:  "
+        f"atol={correctness['atol']} "
+        f"rtol={correctness['rtol']} "
+        f"required_matched_ratio={correctness['required_matched_ratio']}"
+    )
     print(f"agent mean:    {summary['agent_mean_us']:.4f} us")
     if summary["baseline_mean_us"] is not None:
         print(f"baseline mean: {summary['baseline_mean_us']:.4f} us")
@@ -244,6 +261,9 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser.add_argument("--baseline", action="store_true", help="run or read baseline timing")
     parser.add_argument("--agent-cmd", help="command template that prints agent result JSON")
     parser.add_argument("--baseline-cmd", help="command template that prints baseline result JSON")
+    parser.add_argument("--atol", type=float, default=DEFAULT_ATOL)
+    parser.add_argument("--rtol", type=float, default=DEFAULT_RTOL)
+    parser.add_argument("--required-matched-ratio", type=float, default=DEFAULT_REQUIRED_MATCHED_RATIO)
     parser.add_argument("--dump-json", type=Path, help="write full summary JSON")
     parser.add_argument("--append-benchmark", type=Path, help="append mean row to benchmark CSV")
     parser.add_argument("--solution-name", default="agent_candidate")

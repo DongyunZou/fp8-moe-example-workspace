@@ -15,6 +15,11 @@ The repository intentionally starts as a scaffold. Bring your benchmark runner,
 workload traces, and kernel implementation, then let the agent iterate under the
 same rules.
 
+The FP8 MoE definition and PyTorch numerical reference are vendored under
+`references/flashinfer-trace/`; see `docs/REFERENCE.md`. The PyTorch reference is
+only the correctness oracle. Speed is measured against the FlashInfer baseline
+`flashinfer_wrapper_9sdjf3`.
+
 ## 1. Environment
 
 Required for a real FP8 MoE run:
@@ -65,6 +70,14 @@ python3 verify.py --workloads examples/sample_workloads.jsonl
 ```
 
 ## 3. Run Verification
+
+Correctness acceptance for this MoE target:
+
+```text
+atol = 1
+rtol = 0.3
+required_matched_ratio = 0.9
+```
 
 Metadata-only smoke test:
 
@@ -146,4 +159,3 @@ diagnosis, and ranked next steps.
 
 The profile directory is gitignored; commit only the summarized report if it is
 needed for handoff.
-

@@ -17,7 +17,10 @@ The experiment is successful only when the agent can show:
 - Do not use Triton or pure Python kernels unless the user explicitly changes
   the experiment.
 - Target NVIDIA B200 / SM100 / CUDA 13.2.
+- Check FP8 MoE correctness against the PyTorch numerical reference with
+  `atol=1`, `rtol=0.3`, and `required_matched_ratio=0.9`.
 - Compare speed against the benchmark baseline, not against a Python reference.
+- The speed baseline for this target is FlashInfer `flashinfer_wrapper_9sdjf3`.
 - Do not enable an experimental path by default unless it passes correctness
   and improves the target workload.
 - Do not regress large workloads while fixing small workloads unless the path is

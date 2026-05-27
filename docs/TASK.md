@@ -31,6 +31,20 @@ Use the benchmark's MoE tolerance. If reproducing the original experiment, use:
 The Python or framework reference is the numerical oracle. Speed is evaluated
 against the configured baseline implementation.
 
+Vendored reference files:
+
+- Definition:
+  `references/flashinfer-trace/definitions/moe/moe_fp8_block_scale_ds_routing_topk8_ng8_kg4_e32_h7168_i2048.json`
+- PyTorch numerical reference:
+  `references/flashinfer-trace/references/moe/moe_fp8_block_scale_ds_routing_topk8_ng8_kg4_e32_h7168_i2048_reference.py`
+- FlashInfer speed baseline:
+  `references/flashinfer-trace/baselines/moe/moe_fp8_block_scale_ds_routing_topk8_ng8_kg4_e32_h7168_i2048/flashinfer_wrapper_9sdjf3.json`
+
+Important distinction:
+
+- PyTorch reference: correctness and semantics only.
+- FlashInfer `flashinfer_wrapper_9sdjf3`: speed baseline.
+
 ## Current Objective
 
 Bootstrap the repository so another agent can:
@@ -55,6 +69,10 @@ Bootstrap the repository so another agent can:
 - [ ] Workload metadata can be validated with `verify.py`.
 - [ ] Real benchmark commands can be plugged into `verify.py`.
 - [ ] A baseline run and agent run can be dumped to JSON.
+- [ ] Correctness is checked with `atol=1`, `rtol=0.3`, and
+      `required_matched_ratio=0.9`.
+- [ ] Speedups are reported against FlashInfer `flashinfer_wrapper_9sdjf3`, not
+      against the PyTorch reference.
 - [ ] Promoted results are recorded in `benchmark.csv`.
 - [ ] Candidate lineage is recorded in `solutions.jsonl`.
 - [ ] Profiling reports go under `profile/<run_name>/REPORT.md`.
@@ -68,4 +86,3 @@ After wiring a real kernel and benchmark runner, start with:
 Identify the slowest FP8 MoE phase on dev workloads, profile it with NCU, and
 replace the highest-impact bottleneck with a CUDA/CUTLASS implementation.
 ```
-
